@@ -42,7 +42,21 @@ body {
 }
 video, canvas { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
+    transform: scaleX(-1);
 }
+canvas { pointer-events: none; }
+#camera-status { min-height: 1.5em; font-size: 13px; color: #334155; text-align: center; }
+.tryon-controls { display: flex; align-items: center; gap: 12px; width: 100%; }
+.tryon-controls .cta-btn { width: auto; }
+.tryon-controls label { font-size: 13px; white-space: nowrap; }
+#calibration { width: 100%; font-size: 13px; color: #334155; }
+#calibration summary { cursor: pointer; }
+#calibration label { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 8px 0; }
+#calibration input[type="range"] { width: 65%; }
+#anchor-preview { position: relative; width: min(100%, 350px); margin: 10px auto; }
+#anchor-preview img { display: block; width: 100%; height: auto; }
+.anchor-dot { position: absolute; width: 20px; height: 20px; margin: -10px; border-radius: 50%; background: #2563eb; color: white; text-align: center; line-height: 20px; font-weight: 700; }
+#calibration-output { width: 100%; min-height: 160px; margin-top: 10px; }
 
 /* Khung Oval có hiệu ứng nhịp thở (Pulse) */
 .face-guide {
@@ -135,6 +149,7 @@ video, canvas {
     border-color: #94a3b8; 
     transform: translateY(-3px); /* Nhấc thẻ lên khi hover */
 }
+.product-card.selected { border-color: #3b82f6; background: #eff6ff; }
 .product-image { 
     width: 85px; height: 60px; 
     background: #f8fafc; 
@@ -146,3 +161,11 @@ video, canvas {
 .product-info h4 { margin-bottom: 4px; color: #0f172a; font-size: 15px;}
 .product-info p { font-size: 13px; color: #64748b; margin-bottom: 8px; line-height: 1.4; }
 .price { color: #ef4444; font-weight: 700; font-size: 15px; }
+
+@media (max-width: 760px) {
+    body { align-items: flex-start; }
+    .app-container { flex-direction: column; padding: 15px; gap: 18px; margin: 12px 0; }
+    .camera-section, .result-section { width: 100%; }
+    .video-wrapper { height: auto; aspect-ratio: 4 / 3; }
+    .product-list { max-height: none; }
+}

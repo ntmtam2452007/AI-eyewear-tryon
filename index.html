@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style.css">
     
     <!-- NHÚNG THƯ VIỆN MEDIAPIPE -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
 </head>
@@ -21,9 +20,29 @@
                 <video id="webcam" autoplay playsinline></video>
                 <canvas id="overlay"></canvas>
                 <!-- Khung Oval mờ hướng dẫn người dùng đặt mặt vào -->
-                <div class="face-guide"></div>
+                <div class="face-guide" id="face-guide"></div>
             </div>
+            <p id="camera-status" role="status" aria-live="polite">Đang khởi động camera...</p>
             <button id="btn-scan" class="cta-btn primary">Quét khuôn mặt</button>
+            <div class="tryon-controls">
+                <button id="btn-remove" class="cta-btn secondary" hidden>Bỏ kính</button>
+                <label><input id="show-mesh" type="checkbox"> Hiện lưới mặt</label>
+            </div>
+            <details id="calibration">
+                <summary>Hiệu chỉnh kính (kỹ thuật)</summary>
+                <div id="anchor-preview"></div>
+                <p id="calibration-name">Chọn mẫu kính để hiệu chỉnh.</p>
+                <label>Tinh chỉnh kích thước <input data-adjust="size" type="range" min="0.75" max="1.25" step="0.01" value="1"></label>
+                <label>Dịch ngang <input data-adjust="x" type="range" min="-0.15" max="0.15" step="0.005" value="0"></label>
+                <label>Dịch dọc <input data-adjust="y" type="range" min="-0.15" max="0.15" step="0.005" value="0"></label>
+                <label>Góc bù <input data-adjust="angle" type="range" min="-15" max="15" step="0.5" value="0"></label>
+                <div class="tryon-controls">
+                    <button id="btn-reset" type="button" class="cta-btn secondary">Khôi phục</button>
+                    <button id="btn-export" type="button" class="cta-btn secondary">Xuất cấu hình</button>
+                </div>
+                <textarea id="calibration-output" readonly aria-label="Cấu hình hiệu chỉnh" hidden></textarea>
+                <p>Để lưu lâu dài, chép trường adjustment vào mẫu tương ứng trong tryon-data.js.</p>
+            </details>
         </div>
 
         <!-- Cột phải: Kết quả & Gợi ý (Khu vực E-commerce) -->
@@ -47,6 +66,8 @@
     <!-- NHÚNG CÁC FILE JS -->
     <script src="data.js"></script>
     <script src="model.js"></script>
+    <script src="tryon-data.js"></script>
+    <script src="tryon-geometry.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
